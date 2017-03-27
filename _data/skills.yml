@@ -8,13 +8,13 @@
       - Data Structure
 
 - name: Computer Scientist
-  keyworks:
+  keywords:
       - Functional Programming
       - Programming Languages Theory
       - Parsing codes
 
 - name: Researcher
-  keyworks:
+  keywords:
       - Language-Oriented Programming
       - JetBrains MetaProgrammingSystem
 
