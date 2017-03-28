@@ -77,14 +77,14 @@ description: IntelliJ Plugin Icon
 
 ```kotlin
 fun main(args: Array<String>) {
-	val origin = ImageIO.read(File("lice.png"))
-	(0..origin.width - 1).forEach { x ->
-		(0..origin.height - 1).forEach { y ->
-			val o = origin.getRGB(x, y)
-			origin.setRGB(x, y, o + (0x22 shl 24))
-		}
-	}
-	ImageIO.write(origin, "PNG", File("lice-edited.png"))
+  val origin = ImageIO.read(File("lice.png"))
+  (0..origin.width - 1).forEach { x ->
+    (0..origin.height - 1).forEach { y ->
+      val o = origin.getRGB(x, y)
+      origin.setRGB(x, y, o + (0x22 shl 24))
+    }
+  }
+  ImageIO.write(origin, "PNG", File("lice-edited.png"))
 }
 ```
 
