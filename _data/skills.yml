@@ -3,7 +3,7 @@
       - Java/Kotlin
       - Rust/Haskell
       - GUI Programming on JVM
-      - JNI Linkage, professional
+      - JNI Linkage
       - Design Patterns
       - Data Structure
 
@@ -12,11 +12,13 @@
       - Functional Programming
       - Programming Languages Theory
       - Parsing codes
+      - Lisp
 
 - name: Researcher
   keywords:
       - Language-Oriented Programming
       - JetBrains MetaProgrammingSystem
+      - Projectional Editing
 
 - name: Mobile Developer
   keywords:

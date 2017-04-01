@@ -10,7 +10,7 @@ permalink: /about/
 
 I am [ice1000](https://github.com/ice1000)，in Chinese is 千里冰封。
 
-I am a student, Otaku, big fan of JetBrains, who write codes for interest, working with JVM and CLR.
+I am a student, Otaku, big fan of JetBrains, programming for interest, working with JVM and CLR.
 
 Welcome to join the [QQ group ProgramLeague](http://shang.qq.com/wpa/qunwpa?idkey=b75f6d506820d00cd5e7fc78fc5e5487a3444a4a6af06e9e6fa72bccf3fa9d1a).
 
@@ -50,7 +50,7 @@ View me on GitHub is also a good choice to know me better.
 + Dynamic type is full of shit
 + Prototype is a rubbish(but for some cases, it's good)
 + Comparing to metaprogramming, reflection really sucks
-+ It is such greate fun to teach others programming
++ It is such great fun to teach others programming
 + One day, LOP will take the place of OOP
 + JVM is the most powerful runtime in the universe
 + Functional Programming and Object Oriented Programming will finally combined with each other
