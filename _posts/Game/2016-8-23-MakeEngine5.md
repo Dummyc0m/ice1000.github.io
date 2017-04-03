@@ -38,12 +38,12 @@ public void collision(BaseSub baseSub) {
 ```csharp
 public void OnTriggerEnter(Collider c)
 {
-	if (c.tag.Equals("Food"))
-	{
-		Destroy(c.gameObject);
-		_score++;
-		ShowScore();
-	}
+  if (c.tag.Equals("Food"))
+  {
+    Destroy(c.gameObject);
+    _score++;
+    ShowScore();
+  }
 }
 ```
 
@@ -75,8 +75,8 @@ val targets = ArrayList<Pair<PhysicalObject, OnCollideEvent>>()
 
 ```swift
 fun checkCollision() {
-	targets.removeIf { t -> t.first.died }
-	targets.forEach { t -> if (isCollide(t.first)) t.second.handle() }
+  targets.removeIf { t -> t.first.died }
+  targets.forEach { t -> if (isCollide(t.first)) t.second.handle() }
 }
 ```
 
@@ -90,9 +90,9 @@ fun checkCollision() {
 
 ```swift
 protected infix fun PhysicalObject.rectCollideRect(rect: PhysicalObject) =
-		x + width >= rect.x && rect.y <= y + height &&
-				x <= rect.x + rect.width &&
-				y <= rect.y + rect.height
+    x + width >= rect.x && rect.y <= y + height &&
+        x <= rect.x + rect.width &&
+        y <= rect.y + rect.height
 ```
 
 嘛，就这样啦。欢迎围观[寒冰引擎](https://github.com/icela/FriceEngine)，求star求follow！QwQ

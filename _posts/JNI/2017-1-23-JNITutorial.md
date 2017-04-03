@@ -83,7 +83,7 @@ package org.algo4j.win;
  * @author ice1000
  */
 public final class WinAPI {
-	public static native void beep(int frequency, int duration);
+  public static native void beep(int frequency, int duration);
 }
 ```
 
@@ -200,14 +200,14 @@ jobject|java.lang.Object
 #include <windows.h>
 
 JNIEXPORT auto JNICALL Java_org_algo4j_win_WinAPI_beep(
-		JNIEnv *,
-		jclass,
-		jint freq,
-		jint duration) -> void {
-	Beep(
-			static_cast<unsigned long>(freq),
-			static_cast<unsigned long>(duration)
-	);
+    JNIEnv *,
+    jclass,
+    jint freq,
+    jint duration) -> void {
+  Beep(
+      static_cast<unsigned long>(freq),
+      static_cast<unsigned long>(duration)
+  );
 }
 ```
 
@@ -239,11 +239,11 @@ root:
 
 ```java
 public final class WinAPI {
-	public static native void beep(int frequency, int duration);
-	public static void main(String[] args) {
-		System.loadLibrary("jni"); // 这里这个 jni 是你 dll 的名字
-		beep(1000, 1000);
-	}
+  public static native void beep(int frequency, int duration);
+  public static void main(String[] args) {
+    System.loadLibrary("jni"); // 这里这个 jni 是你 dll 的名字
+    beep(1000, 1000);
+  }
 }
 ```
 
@@ -251,8 +251,8 @@ public final class WinAPI {
 
 ```kotlin
 fun main(args: Array<String>): Unit {
-	System.loadLibrary("jni")
-	beep(1000, 1000)
+  System.loadLibrary("jni")
+  beep(1000, 1000)
 }
 ```
 

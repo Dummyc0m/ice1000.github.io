@@ -43,12 +43,12 @@ g.clearRect(getWidth(), getHeight);
 
 ```swift
 while (true) if (!paused && !stopped) {
-	try {
-		onRefresh()
-	} catch (ignored: Exception) { }
-	timeListeners.forEach { it.check() }
-	panel.repaint()
-	Thread.sleep((1000.0 / refreshPerSecond).toLong())
+  try {
+    onRefresh()
+  } catch (ignored: Exception) { }
+  timeListeners.forEach { it.check() }
+  panel.repaint()
+  Thread.sleep((1000.0 / refreshPerSecond).toLong())
 }
 ```
 
@@ -60,8 +60,8 @@ while (true) if (!paused && !stopped) {
 inner class GamePanel : JPanel() {
 override fun update(g: Graphics?) = paint(g)
 override fun paint(g: Graphics) {
-	TODO("draw BufferedImage buffer")
-	g.drawImage(buffer, 0, 0, this)
+  TODO("draw BufferedImage buffer")
+  g.drawImage(buffer, 0, 0, this)
 }
 ```
 

@@ -47,7 +47,7 @@ var b: Object = getNotNullObj()
 var a: Object? = getObj()
 b = a // error
 if (a != null)
-	b = a // OK!
+  b = a // OK!
 ```
 
 ### 还有一个Scala没有的功能，叫Smart cast
@@ -88,9 +88,9 @@ if (a != null) a.call() // OK
 
 ```kotlin
 when(a) {
-	someValue -> fuck()
-	is Fucker -> a.fuck() // 这里也可以 smart cast
-	in someCollection -> someCollection.remove(a)
+  someValue -> fuck()
+  is Fucker -> a.fuck() // 这里也可以 smart cast
+  in someCollection -> someCollection.remove(a)
 }
 ```
 

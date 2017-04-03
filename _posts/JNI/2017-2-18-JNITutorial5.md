@@ -57,18 +57,18 @@ package jni;
  * @author ice1000
  */
 object Main {
-	external fun getSquared(origin: Int): Int
+  external fun getSquared(origin: Int): Int
 
-	external fun getSqrt(origin: Int): Int
+  external fun getSqrt(origin: Int): Int
 
-	@JvmStatic
-	fun main(args: Array<String>) {
-		System.loadLibrary("dll")
-		println(getSquared(16))
-		println(getSquared(15))
-		println(getSqrt(16))
-		println(getSqrt(256))
-	}
+  @JvmStatic
+  fun main(args: Array<String>) {
+    System.loadLibrary("dll")
+    println(getSquared(16))
+    println(getSquared(15))
+    println(getSqrt(16))
+    println(getSqrt(256))
+  }
 }
 ```
 
@@ -98,29 +98,29 @@ struct jclass {}
 
 #[no_mangle]
 pub extern fn Java_jni_Main_getSquared(
-	env: JNIEnv,
-	jc: jclass,
-	origin: jint) -> jint {
-	origin * origin
+  env: JNIEnv,
+  jc: jclass,
+  origin: jint) -> jint {
+  origin * origin
 }
 
 //noinspection RsFunctionNaming
 #[no_mangle]
 pub extern fn Java_jni_Main_getSqrt(
-	env: JNIEnv,
-	jc: jclass,
-	origin: jint) -> jint {
-	let mut left = 0;
-	let mut right = origin;
-	while right - left > 1 {
-		let mid = (left + right) >> 1;
-		if mid * mid > origin {
-			right = mid;
-		} else {
-			left = mid;
-		}
-	}
-	left
+  env: JNIEnv,
+  jc: jclass,
+  origin: jint) -> jint {
+  let mut left = 0;
+  let mut right = origin;
+  while right - left > 1 {
+    let mid = (left + right) >> 1;
+    if mid * mid > origin {
+      right = mid;
+    } else {
+      left = mid;
+    }
+  }
+  left
 }
 ```
 
@@ -238,14 +238,14 @@ struct jintArray {}
 
 struct _JNINativeInterface {}
 impl _JNINativeInterface {
-	fn NewIntArray(&self, len: jsize) -> jintArray {}
+  fn NewIntArray(&self, len: jsize) -> jintArray {}
 }
 
 type JNIEnv = *const _JNINativeInterface;
 
 // 现在有如下代码：
 pub extern fn Java_jni_Main_newIntArray(env: JNIEnv, jc: jclass, jint len) {
-	// 如何通过 env 调用 NewIntArray 方法？
+  // 如何通过 env 调用 NewIntArray 方法？
 }
 ```
 
@@ -262,16 +262,16 @@ pub extern fn Java_jni_Main_newIntArray(env: JNIEnv, jc: jclass, jint len) {
 我就不讲解了，反正也是我编的，那我就肯定知道这些东西该咋实现，就是拿给那些想踩坑的家伙做实验的。还可以继续了解 Kotlin ，何乐不为呢。
 
 ```kotlin
-	val boy = 0
-		external get
+  val boy = 0
+    external get
 
-	var next = 0
-		external set
-		external get
+  var next = 0
+    external set
+    external get
 
-	external fun String.isIntRepr(): Boolean
+  external fun String.isIntRepr(): Boolean
 
-	external fun <T> getObjectJvmPointer(obj: T): Int
+  external fun <T> getObjectJvmPointer(obj: T): Int
 ```
 
 祝你研究愉快。

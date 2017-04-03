@@ -35,7 +35,7 @@ description: JNI Tutorial
 package jni;
 
 public class MathUtils {
-	public static native int gcd(int a, int b);
+  public static native int gcd(int a, int b);
 }
 ```
 
@@ -56,14 +56,14 @@ root:
 
 ```c
 JNIEXPORT auto JNICALL Java_jni_MathUtils_gcd(
-		JNIEnv *env,
-		jclass,
-		jint a,
-		jint b
+    JNIEnv *env,
+    jclass,
+    jint a,
+    jint b
 ) -> jint {
-	jint c;
-	for (; m > 0; c = n % m, n = m, m = c);
-	return n;
+  jint c;
+  for (; m > 0; c = n % m, n = m, m = c);
+  return n;
 }
 ```
 
@@ -81,9 +81,9 @@ public static native int findMax(int[] origin);
 
 ```cpp
 JNIEXPORT jint JNICALL Java_jni_MathUtils_findMax(
-		JNIEnv *,
-		jclass,
-		jintArray
+    JNIEnv *,
+    jclass,
+    jintArray
 );
 ```
 
@@ -99,22 +99,22 @@ Naive 。
 
 ```cpp
 JNIEXPORT jint JNICALL Java_jni_MathUtils_XXXX(
-		JNIEnv *env,
-		jclass,
-		jintArray _data) {
-	jboolean option = nullptr;
-	jint *data = env->GetIntArrayElements(_data, option);
-	// 现在 data 就是那个数组的拷贝啦。以后会讲如何直接获取数组本身。
-	jsize len = env->GetArrayLength(_data);
-	// 获取数组长度
-	data[0] = -1;
-	// 举个例子
-	env->ReleaseIntArrayRegion(_data, data, JNI_OK);
-	// 上面这句把 data 被操作之后的值赋回去。
-	// JNI_OK 表示把 data 复制到 JVM 去，并释放 data 这个数组。
-	// 还有两个可以传进去的值：
-	// JNI_COMMIT 表示复制，但不释放。
-	// JNI_ABORT 不复制，但释放资源。
+    JNIEnv *env,
+    jclass,
+    jintArray _data) {
+  jboolean option = nullptr;
+  jint *data = env->GetIntArrayElements(_data, option);
+  // 现在 data 就是那个数组的拷贝啦。以后会讲如何直接获取数组本身。
+  jsize len = env->GetArrayLength(_data);
+  // 获取数组长度
+  data[0] = -1;
+  // 举个例子
+  env->ReleaseIntArrayRegion(_data, data, JNI_OK);
+  // 上面这句把 data 被操作之后的值赋回去。
+  // JNI_OK 表示把 data 复制到 JVM 去，并释放 data 这个数组。
+  // 还有两个可以传进去的值：
+  // JNI_COMMIT 表示复制，但不释放。
+  // JNI_ABORT 不复制，但释放资源。
 }
 ```
 
@@ -122,18 +122,18 @@ JNIEXPORT jint JNICALL Java_jni_MathUtils_XXXX(
 
 ```cpp
 JNIEXPORT jint JNICALL Java_jni_MathUtils_findMax(
-		JNIEnv *env,
-		jclass,
-		jintArray _data) {
-	jboolean option = nullptr;
-	jint *data = env->GetIntArrayElements(_data, option);
-	jsize len = env->GetArrayLength(_data);
-	jint ret = data[0];
-	for (auto _ = 1; _ < len; ++_) {
-		if (data[_] > ret) ret = data[_];
-	}
-	env->ReleaseIntArrayRegion(_data, data, JNI_ABORT);
-	return ret;
+    JNIEnv *env,
+    jclass,
+    jintArray _data) {
+  jboolean option = nullptr;
+  jint *data = env->GetIntArrayElements(_data, option);
+  jsize len = env->GetArrayLength(_data);
+  jint ret = data[0];
+  for (auto _ = 1; _ < len; ++_) {
+    if (data[_] > ret) ret = data[_];
+  }
+  env->ReleaseIntArrayRegion(_data, data, JNI_ABORT);
+  return ret;
 }
 ```
 
@@ -192,11 +192,11 @@ camelName|JNI 数据本身的指针（就是 GetIntArrayElements 得到的
 
 ```cpp
 JNIEXPORT auto JNICALL Java_XXX_xxXx(...., jintArray _data, ...) -> jint {
-	auto data = env->GetIntArrayElements(_data, NULL);
-	auto _newArray = env->NewIntArray(233);
-	auto newArray = new jint[233]();
-	// codes
-	env->SetIntArrayRegion(_newArray, 0, 233, newArray);
+  auto data = env->GetIntArrayElements(_data, NULL);
+  auto _newArray = env->NewIntArray(233);
+  auto newArray = new jint[233]();
+  // codes
+  env->SetIntArrayRegion(_newArray, 0, 233, newArray);
 }
 ```
 

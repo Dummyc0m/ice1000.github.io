@@ -71,8 +71,8 @@ Ctrl+T | pull（拉取）
 这是我的已经提交了的一段代码：
 
 ```swift
-	} catch (e: IndexOutOfBoundsException) {
-	}
+  } catch (e: IndexOutOfBoundsException) {
+  }
 }
 i++
 ```
@@ -80,8 +80,8 @@ i++
 我将它改为：
 
 ```swift
-	} catch (e: IndexOutOfBoundsException) { }
-	Log.i("important", "parse finished")
+  } catch (e: IndexOutOfBoundsException) { }
+  Log.i("important", "parse finished")
 }
 i++
 ```

@@ -38,13 +38,13 @@ File audio = new File("你的音频文件路径");
 audioInputStream = AudioSystem.getAudioInputStream(audio);
 AudioFormat audioFormat = audioInputStream.getFormat();
 if (audioFormat.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
-	audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-			audioFormat.getSampleRate(), 16,
-			audioFormat.getChannels(),
-			audioFormat.getChannels() * 2,
-			audioFormat.getSampleRate(), false);
-	audioInputStream = AudioSystem.getAudioInputStream(audioFormat,
-			audioInputStream);
+  audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+      audioFormat.getSampleRate(), 16,
+      audioFormat.getChannels(),
+      audioFormat.getChannels() * 2,
+      audioFormat.getSampleRate(), false);
+  audioInputStream = AudioSystem.getAudioInputStream(audioFormat,
+      audioInputStream);
 }
 DataLine.Info info = new Info(SourceDataLine.class, audioFormat);
 sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
@@ -54,8 +54,8 @@ floatVoiceControl.setValue(-20);
 byte[] buf = new byte[0xFF];
 int onceReadDataSize = 0;
 while ((onceReadDataSize = audioInputStream
-		.read(buf, 0, buf.length)) != -1)
-	sourceDataLine.write(buf, 0, onceReadDataSize);
+    .read(buf, 0, buf.length)) != -1)
+  sourceDataLine.write(buf, 0, onceReadDataSize);
 
 sourceDataLine.drain();
 sourceDataLine.close();
@@ -68,7 +68,7 @@ audioInputStream.close();
 
 ```
 javax.sound.sampled.UnsupportedAudioFileException: 
-	could not get audio input stream from input file
+  could not get audio input stream from input file
 ```
 
 这样的报错。冰封在这个问题上起码纠结了接近一个月，中间还跑去学了Lua和C#，最终才得以解决这个~~本来怎么看都应该是甲骨文的错的~~问题。
@@ -95,6 +95,6 @@ mp3spi目前的最新版本是1.9.5，不要被那些早就deprecated的博客�
 
 赶紧吸一口，让我拿自己的播放器听听girigiri爱——
 
-<p><img src="https://coding.net/u/ice1000/p/Images/git/raw/master/blog-img/old/java/javasound/1.png" align="center"></p>
+![](https://coding.net/u/ice1000/p/Images/git/raw/master/blog-img/old/java/javasound/1.png)
 
 我还能再吸。。。吸。。girigiri爱。。

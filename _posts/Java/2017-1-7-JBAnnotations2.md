@@ -30,9 +30,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.CLASS)
 @Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
 public @interface Contract {
-	String value() default "";
+  String value() default "";
 
-	boolean pure() default false;
+  boolean pure() default false;
 }
 ```
 
@@ -54,17 +54,17 @@ public @interface Contract {
 #include <stdio.h>
 
 int not_Pure(int assWeCan) {
-	static int boyNextDoor = 233;
-	return ++boyNextDoor * assWeCan;
+  static int boyNextDoor = 233;
+  return ++boyNextDoor * assWeCan;
 }
 
 int main(const int argc, const char *argv[]) {
-	printf("%d\n", not_Pure(5));
-	printf("%d\n", not_Pure(5));
-	printf("%d\n", not_Pure(5));
-	printf("%d\n", not_Pure(5));
-	printf("%d\n", not_Pure(5));
-	return 0;
+  printf("%d\n", not_Pure(5));
+  printf("%d\n", not_Pure(5));
+  printf("%d\n", not_Pure(5));
+  printf("%d\n", not_Pure(5));
+  printf("%d\n", not_Pure(5));
+  return 0;
 }
 ```
 
@@ -83,23 +83,23 @@ int main(const int argc, const char *argv[]) {
 当你的函数是一个纯函数时（比如三角函数运算，这是再简单不过的纯函数了），你就可以这样修饰。
 
 ```java
-	@Contract(pure = true)
-	public static native double sin(double a);
+  @Contract(pure = true)
+  public static native double sin(double a);
 
-	@Contract(pure = true)
-	public static native double cos(double a);
+  @Contract(pure = true)
+  public static native double cos(double a);
 
-	@Contract(pure = true)
-	public static native double tan(double a);
+  @Contract(pure = true)
+  public static native double tan(double a);
 
-	@Contract(pure = true)
-	public static native double cot(double a);
+  @Contract(pure = true)
+  public static native double cot(double a);
 
-	@Contract(pure = true)
-	public static native double csc(double a);
+  @Contract(pure = true)
+  public static native double csc(double a);
 
-	@Contract(pure = true)
-	public static native double sec(double a);
+  @Contract(pure = true)
+  public static native double sec(double a);
 ```
 
 再比如我算法库大整数的 JNI 端和 Java 端，加减乘除和比大小都不会影响原来的两个算子，会新分配一块内存来放置运算结果，那么这些函数也统统可以使用 @Contract(pure = true)注解。
@@ -124,9 +124,9 @@ int main(const int argc, const char *argv[]) {
  */
 @Override
 public boolean equals(@Nullable Object obj) {
-	if (obj == null || !(obj instanceof BigInt)) return false;
-	if (obj == this) return true;
-	return compareTo((BigInt) obj) == 0;
+  if (obj == null || !(obj instanceof BigInt)) return false;
+  if (obj == this) return true;
+  return compareTo((BigInt) obj) == 0;
 }
 ```
 
@@ -139,9 +139,9 @@ public boolean equals(@Nullable Object obj) {
 @Override
 @Contract(value = "null -> false", pure = true)
 public boolean equals(@Nullable Object obj) {
-	if (obj == null || !(obj instanceof BigInt)) return false;
-	if (obj == this) return true;
-	return compareTo((BigInt) obj) == 0;
+  if (obj == null || !(obj instanceof BigInt)) return false;
+  if (obj == this) return true;
+  return compareTo((BigInt) obj) == 0;
 }
 ```
 
@@ -166,7 +166,7 @@ _ // any value
 @NotNull
 @Contract(value = "_, _ -> !null", pure = true)
 public static ExgcdRes exgcd(long a, long b) {
-	return new ExgcdRes(exgcdJni(a, b));
+  return new ExgcdRes(exgcdJni(a, b));
 }
 ```
 
@@ -218,27 +218,27 @@ private static native int compareTo(@NotNull byte[] a, @NotNull byte[] b);
 @NotNull
 @Contract(value = "_ -> !null", pure = true)
 public BigInt plus(@NotNull BigInt anotherBigInt) {
-	if (sig == anotherBigInt.sig)
-		return new BigInt(plus(data, anotherBigInt.data), sig);
-	if (compareTo(data, anotherBigInt.data) > 0)
-		return new BigInt(minus(data, anotherBigInt.data), sig);
-	return new BigInt(minus(anotherBigInt.data, data), !sig);
+  if (sig == anotherBigInt.sig)
+    return new BigInt(plus(data, anotherBigInt.data), sig);
+  if (compareTo(data, anotherBigInt.data) > 0)
+    return new BigInt(minus(data, anotherBigInt.data), sig);
+  return new BigInt(minus(anotherBigInt.data, data), !sig);
 }
 
 @NotNull
 @Contract(value = "_ -> !null", pure = true)
 public BigInt minus(@NotNull BigInt anotherBigInt) {
-	if (sig != anotherBigInt.sig)
-		return new BigInt(plus(data, anotherBigInt.data), sig);
-	if (compareTo(data, anotherBigInt.data) > 0)
-		return new BigInt(minus(data, anotherBigInt.data), sig);
-	return new BigInt(minus(anotherBigInt.data, data), !sig);
+  if (sig != anotherBigInt.sig)
+    return new BigInt(plus(data, anotherBigInt.data), sig);
+  if (compareTo(data, anotherBigInt.data) > 0)
+    return new BigInt(minus(data, anotherBigInt.data), sig);
+  return new BigInt(minus(anotherBigInt.data, data), !sig);
 }
 
 @NotNull
 @Contract(value = "_ -> !null", pure = true)
 public BigInt times(@NotNull BigInt anotherBigInt) {
-	return new BigInt(times(data, anotherBigInt.data), sig == anotherBigInt.sig);
+  return new BigInt(times(data, anotherBigInt.data), sig == anotherBigInt.sig);
 }
 ```
 

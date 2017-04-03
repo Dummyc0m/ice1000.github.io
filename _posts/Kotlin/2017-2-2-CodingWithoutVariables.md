@@ -11,25 +11,25 @@ description: Kotlin without variables
 
 ```java
 public class Java {
-	public static void main(String[] args) {
-		try {
-			final JFrame frame = new JFrame("BoyNextDoor");
-			final BufferedImage image = ImageIO.read(new URL("http://ice1000.tech/assets/img/avatar.jpg"));
-			frame.setLayout(new BorderLayout());
-			frame.add(new JPanel() {
-				@Override
-				protected void paintComponent(Graphics g) {
-					super.paintComponent(g);
-					if (g != null) g.drawImage(image, 0, 0, this);
-				}
-			}, BorderLayout.CENTER);
-			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			frame.setSize(image.getWidth(), image.getHeight());
-			frame.setVisible(true);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+  public static void main(String[] args) {
+    try {
+      final JFrame frame = new JFrame("BoyNextDoor");
+      final BufferedImage image = ImageIO.read(new URL("http://ice1000.tech/assets/img/avatar.jpg"));
+      frame.setLayout(new BorderLayout());
+      frame.add(new JPanel() {
+        @Override
+        protected void paintComponent(Graphics g) {
+          super.paintComponent(g);
+          if (g != null) g.drawImage(image, 0, 0, this);
+        }
+      }, BorderLayout.CENTER);
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      frame.setSize(image.getWidth(), image.getHeight());
+      frame.setVisible(true);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -43,47 +43,47 @@ public class Java {
 
 ```kotlin
 fun main(args: Array<String>) {
-	JFrame("BoyNextDoor2").run {
-		layout = BorderLayout()
-		add(object : JPanel() {
-			override fun paintComponent(g: Graphics?) {
-				super.paintComponent(g)
-				g?.drawImage(ImageIO.read(URL("http://ice1000.tech/assets/img/avatar.jpg"))
-						.apply { this@run.setSize(width, height) }, 0, 0, this)
-			}
-		}, BorderLayout.CENTER)
-		defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
-		isVisible = true
-	}
+  JFrame("BoyNextDoor2").run {
+    layout = BorderLayout()
+    add(object : JPanel() {
+      override fun paintComponent(g: Graphics?) {
+        super.paintComponent(g)
+        g?.drawImage(ImageIO.read(URL("http://ice1000.tech/assets/img/avatar.jpg"))
+            .apply { this@run.setSize(width, height) }, 0, 0, this)
+      }
+    }, BorderLayout.CENTER)
+    defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+    isVisible = true
+  }
 }
 ```
 
 看到没，我一个变量没使用，靠范型扩展（而且是标准库自带的范型扩展， Standard.kt 里面的）搞定了原本需要声明变量的地方。我觉得这是 Kotlin 很优雅的一个地方。
 
-至于范型扩展是啥，请看我[这篇博客](http://ice1000.tech/2016/10/17/LearnKotlin7.html)，或者看这篇博客在[知乎专栏的转载](https://zhuanlan.zhihu.com/p/23071063)。
+至于范型扩展是啥，请看我[这篇博客](http://ice1000.tech/2016/10/17/LearnKotlin7/)，或者看这篇博客在[知乎专栏的转载](https://zhuanlan.zhihu.com/p/23071063)。
 
 再者， Kotlin 摆脱了 Checked Exception 的魔咒。我再举个例子，我昨天在 JavaCodeGeeks 上面看到的教程里面是这么写 Hadoop 的 MapReduce 的：
 
 ```java
 public class MapClass extends Mapper<LongWritable, Text, Text, IntWritable> {
 
-	private final static IntWritable one = new IntWritable(1);
-	private Text word = new Text();
+  private final static IntWritable one = new IntWritable(1);
+  private Text word = new Text();
 
-	@Override
-	protected void map(LongWritable key, Text value,
-			Context context)
-			throws IOException, InterruptedException {
-		
-		String line = value.toString();
-		StringTokenizer st = new StringTokenizer(line," ");
-		
-		while(st.hasMoreTokens()){
-			word.set(st.nextToken());
-			context.write(word,one);
-		}
-		
-	}
+  @Override
+  protected void map(LongWritable key, Text value,
+      Context context)
+      throws IOException, InterruptedException {
+    
+    String line = value.toString();
+    StringTokenizer st = new StringTokenizer(line," ");
+    
+    while(st.hasMoreTokens()){
+      word.set(st.nextToken());
+      context.write(word,one);
+    }
+    
+  }
 }
 ```
 
@@ -91,17 +91,17 @@ public class MapClass extends Mapper<LongWritable, Text, Text, IntWritable> {
 
 ```kotlin
 class MapClass : Mapper<LongWritable, Text, Text, IntWritable>() {
-	val word = Text()
-	val one = IntWritable(1)
+  val word = Text()
+  val one = IntWritable(1)
 
-	override fun map(
-			key: LongWritable?,
-			value: Text?,
-			context: Context?) {
-		value!!.toString().split(" ").forEach { str ->
-			context?.write(word.apply { set(str) }, one)
-		}
-	}
+  override fun map(
+      key: LongWritable?,
+      value: Text?,
+      context: Context?) {
+    value!!.toString().split(" ").forEach { str ->
+      context?.write(word.apply { set(str) }, one)
+    }
+  }
 }
 ```
 
@@ -110,20 +110,20 @@ class MapClass : Mapper<LongWritable, Text, Text, IntWritable>() {
 ```java
 public class ReduceClass extends Reducer {
 
-	@Override
-	protected void reduce(Text key, Iterable values,
-			Context context)
-			throws IOException, InterruptedException {
+  @Override
+  protected void reduce(Text key, Iterable values,
+      Context context)
+      throws IOException, InterruptedException {
 
-		int sum = 0;
-		Iterator valuesIt = values.iterator();
+    int sum = 0;
+    Iterator valuesIt = values.iterator();
 
-		while(valuesIt.hasNext()){
-			sum = sum + valuesIt.next().get();
-		}
+    while(valuesIt.hasNext()){
+      sum = sum + valuesIt.next().get();
+    }
 
-		context.write(key, new IntWritable(sum));
-	}
+    context.write(key, new IntWritable(sum));
+  }
 }
 ```
 
@@ -131,12 +131,12 @@ public class ReduceClass extends Reducer {
 
 ```kotlin
 class ReduceClass : Reducer<Text, IntWritable, Text, IntWritable>() {
-	override fun reduce(
-			key: Text?,
-			values: MutableIterable<IntWritable>?,
-			context: Context?) {
-		context?.write(key, IntWritable(values?.fold(0) { sum, int -> sum + int.get() } ?: 0))
-	}
+  override fun reduce(
+      key: Text?,
+      values: MutableIterable<IntWritable>?,
+      context: Context?) {
+    context?.write(key, IntWritable(values?.fold(0) { sum, int -> sum + int.get() } ?: 0))
+  }
 }
 ```
 
@@ -145,42 +145,42 @@ class ReduceClass : Reducer<Text, IntWritable, Text, IntWritable>() {
 ```java
 public class WordCount extends Configured implements Tool{
 
-	public static void main(String[] args) throws Exception{
-		int exitCode = ToolRunner.run(new WordCount(), args);
-		System.exit(exitCode);
-	}
+  public static void main(String[] args) throws Exception{
+    int exitCode = ToolRunner.run(new WordCount(), args);
+    System.exit(exitCode);
+  }
 
-	public int run(String[] args) throws Exception {
-		if (args.length != 2) {
-			System.err.printf("Usage: %s needs two arguments, input and output 
+  public int run(String[] args) throws Exception {
+    if (args.length != 2) {
+      System.err.printf("Usage: %s needs two arguments, input and output 
 files\n", getClass().getSimpleName());
-			return -1;
-		}
+      return -1;
+    }
 
-		Job job = new Job();
-		job.setJarByClass(WordCount.class);
-		job.setJobName("WordCounter");
+    Job job = new Job();
+    job.setJarByClass(WordCount.class);
+    job.setJobName("WordCounter");
 
-		FileInputFormat.addInputPath(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+    FileInputFormat.addInputPath(job, new Path(args[0]));
+    FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
-		job.setOutputFormatClass(TextOutputFormat.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
+    job.setOutputFormatClass(TextOutputFormat.class);
 
-		job.setMapperClass(MapClass.class);
-		job.setReducerClass(ReduceClass.class);
+    job.setMapperClass(MapClass.class);
+    job.setReducerClass(ReduceClass.class);
 
-		int returnValue = job.waitForCompletion(true) ? 0:1;
+    int returnValue = job.waitForCompletion(true) ? 0:1;
 
-		if(job.isSuccessful()) {
-			System.out.println("Job was successful");
-		} else if(!job.isSuccessful()) {
-			System.out.println("Job was not successful");
-		}
+    if(job.isSuccessful()) {
+      System.out.println("Job was successful");
+    } else if(!job.isSuccessful()) {
+      System.out.println("Job was not successful");
+    }
 
-		return returnValue;
-	}
+    return returnValue;
+  }
 }
 ```
 
@@ -188,30 +188,30 @@ files\n", getClass().getSimpleName());
 
 ```kotlin
 class WordCounter : Configured(), Tool {
-	override fun run(args: Array<out String>?): Int {
-		args?.let {
-			if (args.size != 2) {
-				println("fuck you!")
-				return -1
-			}
-			Job().apply {
-				setJarByClass(WordCounter::class.java)
-				jobName = "WordCounter"
-				FileInputFormat.addInputPath(this@apply, Path(args[0]))
-				FileOutputFormat.setOutputPath(this@apply, Path(args[1]))
-				outputKeyClass = Text::class.java
-				outputValueClass = IntWritable::class.java
-				outputFormatClass = FileOutputFormat::class.java
-				mapperClass = MapClass::class.java
-				reducerClass = ReduceClass::class.java
-				waitForCompletion(true).run {
-					if (isSuccessful) println("success!") else println("failed!")
-					return if (this) 0 else 1
-				}
-			}
-		}
-		return -2
-	}
+  override fun run(args: Array<out String>?): Int {
+    args?.let {
+      if (args.size != 2) {
+        println("fuck you!")
+        return -1
+      }
+      Job().apply {
+        setJarByClass(WordCounter::class.java)
+        jobName = "WordCounter"
+        FileInputFormat.addInputPath(this@apply, Path(args[0]))
+        FileOutputFormat.setOutputPath(this@apply, Path(args[1]))
+        outputKeyClass = Text::class.java
+        outputValueClass = IntWritable::class.java
+        outputFormatClass = FileOutputFormat::class.java
+        mapperClass = MapClass::class.java
+        reducerClass = ReduceClass::class.java
+        waitForCompletion(true).run {
+          if (isSuccessful) println("success!") else println("failed!")
+          return if (this) 0 else 1
+        }
+      }
+    }
+    return -2
+  }
 
 }
 

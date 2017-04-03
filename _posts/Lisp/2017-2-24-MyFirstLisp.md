@@ -42,36 +42,36 @@ Lisp 讲道理已经帮你手写好了语法树了，整个 parse 的过程也�
 
 ```kotlin
 interface StringNode {
-	val strRepr: String
-	val lineNumber: Int
+  val strRepr: String
+  val lineNumber: Int
 }
 
 class StringMiddleNode(
-		override val lineNumber: Int,
-		val list: MutableList<StringNode> = mutableListOf<StringNode>()) : StringNode {
+    override val lineNumber: Int,
+    val list: MutableList<StringNode> = mutableListOf<StringNode>()) : StringNode {
 
-	val empty: Boolean
-		get() = list.isEmpty()
+  val empty: Boolean
+    get() = list.isEmpty()
 
-	override val strRepr: String
-		get() = list.fold(StringBuilder("{")) { sb, last ->
-			sb.append(" [").append(last.strRepr).append("]")
-		}.append(" }").toString()
+  override val strRepr: String
+    get() = list.fold(StringBuilder("{")) { sb, last ->
+      sb.append(" [").append(last.strRepr).append("]")
+    }.append(" }").toString()
 
-	fun add(n: StringNode) {
-		list.add(n)
-	}
+  fun add(n: StringNode) {
+    list.add(n)
+  }
 }
 
 class StringLeafNode(
-		override val lineNumber: Int,
-		val str: String) : StringNode {
-	override val strRepr = str
+    override val lineNumber: Int,
+    val str: String) : StringNode {
+  override val strRepr = str
 }
 
 class EmptyStringNode(
-		override val lineNumber: Int) : StringNode {
-	override val strRepr = ""
+    override val lineNumber: Int) : StringNode {
+  override val strRepr = ""
 }
 ```
 
@@ -85,25 +85,25 @@ val currentNodeStack = Stack<StringMiddleNode>()
 currentNodeStack.push(StringMiddleNode(1))
 var lineNumber = 1
 fun check(index: Int) {
-	// 检查一个Token是否合法，然后加入TokenList。
+  // 检查一个Token是否合法，然后加入TokenList。
 }
 code.forEachIndexed { index, c ->
-	when (c) {
-		';' -> // 处理注释
-		'(' -> // 括号
-		')' -> // 反括号
-		' ', '\n', '\t', '\r' -> // 解析分隔符
-		// \n 记得处理注释
-		'\"' -> // 解析字符串
-		else -> {
-			if (!quoteStarted) elementStarted = true
-		}
-	}
-	lastElement = c
+  when (c) {
+    ';' -> // 处理注释
+    '(' -> // 括号
+    ')' -> // 反括号
+    ' ', '\n', '\t', '\r' -> // 解析分隔符
+    // \n 记得处理注释
+    '\"' -> // 解析字符串
+    else -> {
+      if (!quoteStarted) elementStarted = true
+    }
+  }
+  lastElement = c
 }
 check(code.length - 1)
 if (currentNodeStack.size > 1) {
-	// 括号不匹配
+  // 括号不匹配
 }
 return currentNodeStack.peek()
 ```
@@ -114,26 +114,26 @@ return currentNodeStack.peek()
 
 ```kotlin
 fun parseValue(str: String): Node = when {
-	str.isEmpty() || str.isBlank() -> EmptyNode
-	str.isString() -> ValueNode(Value(str
-		.substring(1, str.length - 1)
-		.apply {
-			// TODO replace \n, \t, etc.
-		}))
-	str.isOctInt() -> ValueNode(str.toOctInt())
-	str.isInt() -> ValueNode(str.toInt())
-	str.isHexInt() -> ValueNode(str.toHexInt())
-	str.isBinInt() -> ValueNode(str.toBinInt())
-	"null" == str -> ValueNode(Nullptr)
-	"true" == str -> ValueNode(true)
-	"false" == str -> ValueNode(false)
+  str.isEmpty() || str.isBlank() -> EmptyNode
+  str.isString() -> ValueNode(Value(str
+    .substring(1, str.length - 1)
+    .apply {
+      // TODO replace \n, \t, etc.
+    }))
+  str.isOctInt() -> ValueNode(str.toOctInt())
+  str.isInt() -> ValueNode(str.toInt())
+  str.isHexInt() -> ValueNode(str.toHexInt())
+  str.isBinInt() -> ValueNode(str.toBinInt())
+  "null" == str -> ValueNode(Nullptr)
+  "true" == str -> ValueNode(true)
+  "false" == str -> ValueNode(false)
 // TODO() is float
 // TODO() is double
 // TODO() is type
-	else -> {
-		serr("error token: $str")
-		EmptyNode // do nothing
-	}
+  else -> {
+    serr("error token: $str")
+    EmptyNode // do nothing
+  }
 }
 ```
 
@@ -141,22 +141,22 @@ fun parseValue(str: String): Node = when {
 
 ```kotlin
 fun mapAst(
-		node: StringNode,
-		symbolList: SymbolList = SymbolList()): Node = when (node) {
-	is StringMiddleNode -> {
-		val str = node.list[0].strRepr
-		ExpressionNode(
-				symbolList,
-				symbolList.getFunctionId(str) ?: undefinedFunction(str),
-				node.list.subList(1, node.list.size).map { strNode ->
-					mapAst(node = strNode, symbolList = symbolList)
-				}
-		)
-	}
-	is StringLeafNode ->
-		parseValue(str = node.str)
-	else -> // empty
-		EmptyNode
+    node: StringNode,
+    symbolList: SymbolList = SymbolList()): Node = when (node) {
+  is StringMiddleNode -> {
+    val str = node.list[0].strRepr
+    ExpressionNode(
+        symbolList,
+        symbolList.getFunctionId(str) ?: undefinedFunction(str),
+        node.list.subList(1, node.list.size).map { strNode ->
+          mapAst(node = strNode, symbolList = symbolList)
+        }
+    )
+  }
+  is StringLeafNode ->
+    parseValue(str = node.str)
+  else -> // empty
+    EmptyNode
 }
 ```
 

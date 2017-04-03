@@ -37,17 +37,17 @@ import javafx.fxml.FXML;
 
 public class Controller {
 
-	private static final String ASS_WE_CAN = "Ass we can";
-	private static final String BOY_NEXT_DOOR = "Boy next door";
+  private static final String ASS_WE_CAN = "Ass we can";
+  private static final String BOY_NEXT_DOOR = "Boy next door";
 
-	@FXML
-	private JFXButton button;
+  @FXML
+  private JFXButton button;
 
-	@FXML
-	void onButonCLick(ActionEvent event) {
-		if (button.getText().equals(ASS_WE_CAN)) button.setText(BOY_NEXT_DOOR);
-		else button.setText(ASS_WE_CAN);
-	}
+  @FXML
+  void onButonCLick(ActionEvent event) {
+    if (button.getText().equals(ASS_WE_CAN)) button.setText(BOY_NEXT_DOOR);
+    else button.setText(ASS_WE_CAN);
+  }
 
 }
 

@@ -72,7 +72,7 @@ Exception in thread "main" java.lang.Error: java.io.FileNotFoundException: D:\gi
 ```
 
 赶紧翻回收站，把tzmappings找回来！
-		
+
 ```c
 D:\git-repos\城堡游戏\out\artifacts\JAR>cui.bat
 Exception in thread "main" java.lang.Error: java.io.FileNotFoundException: D:\git-repos\城堡游戏\out\artifacts\JAR\jre\lib\tzdb.dat (系统找不到指定的文件。)

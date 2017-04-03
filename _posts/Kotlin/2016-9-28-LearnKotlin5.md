@@ -28,14 +28,14 @@ game {
 
 ```kotlin
 game {
-	bounds {
-		width = 800
-	}
-	oval {
-		x = 20.0
-		width = 120.0
-		color = BLUE
-	}
+  bounds {
+    width = 800
+  }
+  oval {
+    x = 20.0
+    width = 120.0
+    color = BLUE
+  }
 }
 ```
 
@@ -51,7 +51,7 @@ game {
 
 ```kotlin
 infix fun Range.step(step: Int): Range {
-	// codes
+  // codes
 }
 ```
 
@@ -68,7 +68,7 @@ infix fun Range.step(step: Int): Range {
 
 ```java
 public Range step(Range $reciever, int step) {
-	// codes
+  // codes
 }
 ```
 
@@ -78,19 +78,19 @@ public Range step(Range $reciever, int step) {
 
 ```kotlin
 fun String.webResource(submit: (String) -> Unit, default: String = DEFAULT_VALUE) {
-	async() {
-		var ret = readString(default)
-		uiThread { submit(ret) }
-//		Log.i("important", "ret = $ret")
-		Log.i(this@BaseActivity.toString(), this@webResource)
-		if (!ret.equals(DEFAULT_VALUE) && !haveNetwork) {
-			uiThread { submit(ret) }
-		} else {
-			ret = java.net.URL(this@webResource).readText(Charsets.UTF_8)
-			uiThread { submit(ret) }
-			save(ret)
-		}
-	}
+  async() {
+    var ret = readString(default)
+    uiThread { submit(ret) }
+//    Log.i("important", "ret = $ret")
+    Log.i(this@BaseActivity.toString(), this@webResource)
+    if (!ret.equals(DEFAULT_VALUE) && !haveNetwork) {
+      uiThread { submit(ret) }
+    } else {
+      ret = java.net.URL(this@webResource).readText(Charsets.UTF_8)
+      uiThread { submit(ret) }
+      save(ret)
+    }
+  }
 }
 ```
 
@@ -105,7 +105,7 @@ fun Int.elapsed(): Boolean {
 
 // 调用
 if (1000.elapsed()) {
-	/* codes */
+  /* codes */
 }
 ```
 

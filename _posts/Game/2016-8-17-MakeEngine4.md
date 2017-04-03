@@ -45,10 +45,10 @@ OIer日常膜蛤已经不是啥稀奇事，release里面放毒：
 
 ```swift
 async() {
-	// Access network or database, or some bad stuff #(滑稽)
-	uiThread {
-		// Display data
-	}
+  // Access network or database, or some bad stuff #(滑稽)
+  uiThread {
+    // Display data
+  }
 }
 ```
 
@@ -56,8 +56,8 @@ async() {
 
 ```swift
 inline fun <T> T.async(crossinline block: T.() -> Unit): T {
-	Thread({ block.invoke(this) }).start()
-	return this
+  Thread({ block.invoke(this) }).start()
+  return this
 }
 ```
 
@@ -65,7 +65,7 @@ inline fun <T> T.async(crossinline block: T.() -> Unit): T {
 
 ```swift
 async() {
-	ImageIO.write(getScreenCut().image, "png", File("截屏" + cnt++ + ".png"));
+  ImageIO.write(getScreenCut().image, "png", File("截屏" + cnt++ + ".png"));
 }
 ```
 
@@ -82,19 +82,19 @@ async() {
 ```swift
 // Original 原来的样子
 while (true) if (!paused && !stopped) {
-	try {
-		onRefresh()
-	} catch (ignored: Exception) { }
-	timeListeners.forEach { it.check() }
-	panel.repaint()
-	Thread.sleep((1000.0 / refreshPerSecond).toLong())
+  try {
+    onRefresh()
+  } catch (ignored: Exception) { }
+  timeListeners.forEach { it.check() }
+  panel.repaint()
+  Thread.sleep((1000.0 / refreshPerSecond).toLong())
 }
 
 // Current 魔改版
 loopIf({ !paused && !stopped && refresh.ended()}) {
-	forceRun { onRefresh() }
-	timeListeners.forEach { it.check() }
-	panel.repaint()
+  forceRun { onRefresh() }
+  timeListeners.forEach { it.check() }
+  panel.repaint()
 }
 ```
 

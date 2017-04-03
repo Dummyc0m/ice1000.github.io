@@ -40,23 +40,23 @@ Kotlin 从根本上解决了这个问题——它要求你在编译期处理所�
 private inner class BruteForce
 @TestOnly
 internal constructor(length: Int) {
-	@TestOnly
-	private val data = LongArray(length)
+  @TestOnly
+  private val data = LongArray(length)
 
-	@TestOnly
-	fun update(from: Int, to: Int, value: Long) {
-		(from..to).forEach { data[it] += value }
-	}
+  @TestOnly
+  fun update(from: Int, to: Int, value: Long) {
+    (from..to).forEach { data[it] += value }
+  }
 
-	@TestOnly
-	fun query(from: Int, to: Int): Long {
-		var ret = 0L
-		(from..to).forEach { ret += data[it] }
-		return ret
-	}
+  @TestOnly
+  fun query(from: Int, to: Int): Long {
+    var ret = 0L
+    (from..to).forEach { ret += data[it] }
+    return ret
+  }
 
-	@TestOnly
-	operator fun get(left: Int, right: Int) = query(left, right)
+  @TestOnly
+  operator fun get(left: Int, right: Int) = query(left, right)
 }
 ```
 
@@ -95,7 +95,7 @@ internal constructor(length: Int) {
 
 ```java
 public void boyNextDoor(@Nls String msg) {
-	textArea.append(msg);
+  textArea.append(msg);
 }
 ```
 
@@ -103,7 +103,7 @@ public void boyNextDoor(@Nls String msg) {
 
 ```java
 public DividedByZeroException(@NotNull @Nls String msg) {
-	super(msg);
+  super(msg);
 }
 ```
 
@@ -117,15 +117,15 @@ public DividedByZeroException(@NotNull @Nls String msg) {
 
 ```java
 public BigInt(@NotNull @NonNls String origin) {
-	boolean sigTemp;
-	if (origin.startsWith("-")) {
-		sigTemp = false;
-		origin = origin.substring(1);
-	} else sigTemp = true;
-	byte[] ori = origin.getBytes();
-	if (ori.length == 1 && ori[0] == '0') sigTemp = true;
-	data = ori;
-	sig = sigTemp;
+  boolean sigTemp;
+  if (origin.startsWith("-")) {
+    sigTemp = false;
+    origin = origin.substring(1);
+  } else sigTemp = true;
+  byte[] ori = origin.getBytes();
+  if (ori.length == 1 && ori[0] == '0') sigTemp = true;
+  data = ori;
+  sig = sigTemp;
 }
 ```
 
